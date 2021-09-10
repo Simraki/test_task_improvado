@@ -8,7 +8,7 @@ import os
 from src.scripts import basic_task, advanced_task
 
 
-def _compare_two_tsv(to_tsv1: str, to_tsv2: str, tag: str = ''):
+def _compare_two_tsv(to_tsv1: str, to_tsv2: str) -> bool:
     file_1 = open(to_tsv1)
     file_2 = open(to_tsv2)
 
@@ -26,17 +26,17 @@ def _compare_two_tsv(to_tsv1: str, to_tsv2: str, tag: str = ''):
     for i in tsv1:
         try:
             is_equal = is_equal and i == next(tsv2)
-        except StopIteration as error:
+        except StopIteration:
             close()
-            raise AssertionError(f"{tag} || TSV files are not similar") from error
+            return False
     try:
         next(tsv2)
         close()
-        raise AssertionError(f"{tag} || TSV files are not similar")
+        return False
     except StopIteration:
         pass
     close()
-    print(f"{tag} || TSV files are similar")
+    return True
 
 
 def basic_tsv_test():
@@ -48,7 +48,8 @@ def basic_tsv_test():
                xml_paths=['data/xml_data.xml'],
                out=to_tsv)
 
-    _compare_two_tsv(to_tsv, 'results/basic_results.tsv', tag='basic')
+    assert _compare_two_tsv(to_tsv, 'results/basic_results.tsv'), 'TSV are not similar'
+    print('Done || Basic Test')
 
 
 def advanced_tsv_test():
@@ -60,7 +61,8 @@ def advanced_tsv_test():
                   xml_paths=['data/xml_data.xml'],
                   out=to_tsv)
 
-    _compare_two_tsv(to_tsv, 'results/advanced_results.tsv', tag='advanced')
+    assert _compare_two_tsv(to_tsv, 'results/advanced_results.tsv'), 'TSV are not similar'
+    print('Done || Advanced Test')
 
 
 basic_tsv_test()
