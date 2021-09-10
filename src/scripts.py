@@ -6,20 +6,16 @@ from typing import List, Tuple
 
 from .aliases import DataList
 from .interfaces import AbstractFileParser
-from .parsers import CSVFile, JsonFile, XMLFile
+from .parsers import get_parser_by_ext
 from .utils import split_str
 from .writers import TSVWriter
 
 
-def _get_dicts_and_headers(csv_paths: List[str], json_paths: List[str], xml_paths: List[str]) -> Tuple[List, DataList]:
+def _get_dicts_and_headers(paths: List[str]) -> Tuple[List, DataList]:
     parsers: List[AbstractFileParser] = []
 
-    for p in csv_paths:
-        parsers.append(CSVFile(p))
-    for p in json_paths:
-        parsers.append(JsonFile(p))
-    for p in xml_paths:
-        parsers.append(XMLFile(p))
+    for p in paths:
+        parsers.append(get_parser_by_ext(p))
 
     sorted_headers = parsers[0].raw_headers
     for v in parsers[1:]:
@@ -33,10 +29,10 @@ def _get_dicts_and_headers(csv_paths: List[str], json_paths: List[str], xml_path
     return sorted_headers, dicts
 
 
-def basic_task(csv_paths: List[str], json_paths: List[str], xml_paths: List[str], out: str):
+def basic_task(paths: List[str], out: str):
     """Script for basic task"""
 
-    sorted_headers, dicts = _get_dicts_and_headers(csv_paths, json_paths, xml_paths)
+    sorted_headers, dicts = _get_dicts_and_headers(paths)
 
     dicts.sort(key=lambda k: k['D1'])
 
@@ -46,10 +42,10 @@ def basic_task(csv_paths: List[str], json_paths: List[str], xml_paths: List[str]
     tsv.save(out)
 
 
-def advanced_task(csv_paths: List[str], json_paths: List[str], xml_paths: List[str], out: str):
+def advanced_task(paths: List[str], out: str):
     """Script for advanced task"""
 
-    sorted_headers, dicts = _get_dicts_and_headers(csv_paths, json_paths, xml_paths)
+    sorted_headers, dicts = _get_dicts_and_headers(paths)
 
     d_headers = [x for x in sorted_headers if x.startswith('D')]
     m_headers = [x for x in sorted_headers if x.startswith('M')]

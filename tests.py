@@ -43,9 +43,8 @@ def basic_tsv_test():
     """Test for basic task"""
 
     to_tsv = 'out_test/basic.tsv'
-    basic_task(csv_paths=['data/csv_data_1.csv', 'data/csv_data_2.csv'],
-               json_paths=['data/json_data.json'],
-               xml_paths=['data/xml_data.xml'],
+    to_files = ['data/csv_data_1.csv', 'data/csv_data_2.csv', 'data/json_data.json', 'data/xml_data.xml']
+    basic_task(paths=to_files,
                out=to_tsv)
 
     assert _compare_two_tsv(to_tsv, 'results/basic_results.tsv'), 'TSV are not similar'
@@ -56,9 +55,8 @@ def advanced_tsv_test():
     """Test for advanced task"""
 
     to_tsv = 'out_test/advanced.tsv'
-    advanced_task(csv_paths=['data/csv_data_1.csv', 'data/csv_data_2.csv'],
-                  json_paths=['data/json_data.json'],
-                  xml_paths=['data/xml_data.xml'],
+    to_files = ['data/csv_data_1.csv', 'data/csv_data_2.csv', 'data/json_data.json', 'data/xml_data.xml']
+    advanced_task(paths=to_files,
                   out=to_tsv)
 
     assert _compare_two_tsv(to_tsv, 'results/advanced_results.tsv'), 'TSV are not similar'

@@ -7,7 +7,7 @@ import json
 import xml.etree.ElementTree as ET
 
 from .interfaces import AbstractFileParser
-from .utils import str_to_int_optional
+from .utils import str_to_int_optional, is_have_extension
 
 
 class CSVFile(AbstractFileParser):
@@ -51,3 +51,18 @@ class XMLFile(AbstractFileParser):
             data.append(t)
         self.raw_headers = headers
         self.raw_data = data
+
+
+_EXT_PARSERS = {
+    '.csv': CSVFile,
+    '.json': JsonFile,
+    '.xml': XMLFile
+}
+
+
+def get_parser_by_ext(to_file: str) -> AbstractFileParser:
+    """Return parser class by extension"""
+    for ext, parser in _EXT_PARSERS.items():
+        if is_have_extension(to_file, ext):
+            return parser(to_file)
+    raise RuntimeError(f'Unknown input file extension || Path: {to_file}')

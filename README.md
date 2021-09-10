@@ -156,25 +156,33 @@ ____
 
 Для запуска решения в терминале определены такие аргументы:
 
-- `--csv` - список путей csv файлов 
-- `--json` - список путей json файлов
-- `--xml` - список путей xml файлов
-- `--out` - путь для выходного файла
+- `--paths` - список путей входных файлов
+- `--out` - путь для выходного файла расширения .tsv
 - `-adv` или `--advanced` - решить задачу advanced вместо basic
 
 Примеры:
+
+**simple**
 ```
-$ python main.py --csv data/csv_data_1.csv data/csv_data_2.csv --json data/json_data.json --xml data/xml_data.xml
+$ python main.py --paths data/csv_data_1.csv data/csv_data_2.csv data/json_data.json data/xml_data.xml
 ```
 
+**-out arg**
 ```
-$ python main.py --csv data/csv_data_1.csv data/csv_data_2.csv --json data/json_data.json --xml data/xml_data.xml --out out1/out.tsv
-```
-
-```
-$ python main.py --csv data/csv_data_1.csv data/csv_data_2.csv --json data/json_data.json --xml data/xml_data.xml -adv
+$ python main.py --paths data/csv_data_1.csv data/csv_data_2.csv data/json_data.json data/xml_data.xml --out out1/out.tsv
 ```
 
+**-adv arg**
 ```
-$ python main.py --csv data/csv_data_1.csv data/csv_data_2.csv --json data/json_data.json --xml data/xml_data.xml --out out1/out.tsv -adv
+$ python main.py --paths data/csv_data_1.csv data/csv_data_2.csv data/json_data.json data/xml_data.xml -adv
+```
+
+**-out & --advanced args**
+```
+$ python main.py --paths data/csv_data_1.csv data/csv_data_2.csv data/json_data.json data/xml_data.xml --out out1/out.tsv --advanced
+```
+
+**help**
+```
+$ python main.py --help
 ```

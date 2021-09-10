@@ -6,6 +6,7 @@ import csv
 import os
 
 from .aliases import DataRow, DataList
+from .utils import is_have_extension
 
 
 class TSVWriter:
@@ -32,6 +33,8 @@ class TSVWriter:
 
     def save(self, out: str):
         """Save TSV with contained headers and data"""
+        if not is_have_extension(out, '.tsv'):
+            raise RuntimeError('The output file does not have extension .tsv')
 
         (to_file, _) = os.path.split(out)
         if not os.path.exists(to_file):
