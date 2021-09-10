@@ -1,3 +1,7 @@
+"""
+Some tests for tasks
+"""
+
 import csv
 import os
 
@@ -5,26 +9,26 @@ from src.scripts import basic_task, advanced_task
 
 
 def _compare_two_tsv(to_tsv1: str, to_tsv2: str, tag: str = ''):
-    f1 = open(to_tsv1)
-    f2 = open(to_tsv2)
+    file_1 = open(to_tsv1)
+    file_2 = open(to_tsv2)
 
     def close():
-        f1.close()
-        f2.close()
+        file_1.close()
+        file_2.close()
         if os.path.isfile(to_tsv1):
             os.remove(to_tsv1)
         if os.path.isdir(os.path.split(to_tsv1)[0]):
             os.rmdir(os.path.split(to_tsv1)[0])
 
-    tsv1 = csv.reader(f1, delimiter='\t')
-    tsv2 = csv.reader(f2, delimiter='\t')
+    tsv1 = csv.reader(file_1, delimiter='\t')
+    tsv2 = csv.reader(file_2, delimiter='\t')
     is_equal = True
-    for i1 in tsv1:
+    for i in tsv1:
         try:
-            is_equal = is_equal and i1 == next(tsv2)
-        except StopIteration:
+            is_equal = is_equal and i == next(tsv2)
+        except StopIteration as error:
             close()
-            raise AssertionError(f"{tag} || TSV files are not similar")
+            raise AssertionError(f"{tag} || TSV files are not similar") from error
     try:
         next(tsv2)
         close()
@@ -36,6 +40,8 @@ def _compare_two_tsv(to_tsv1: str, to_tsv2: str, tag: str = ''):
 
 
 def basic_tsv_test():
+    """Test for basic task"""
+
     to_tsv = 'out_test/basic.tsv'
     basic_task(csv_paths=['data/csv_data_1.csv', 'data/csv_data_2.csv'],
                json_paths=['data/json_data.json'],
@@ -46,6 +52,8 @@ def basic_tsv_test():
 
 
 def advanced_tsv_test():
+    """Test for advanced task"""
+
     to_tsv = 'out_test/advanced.tsv'
     advanced_task(csv_paths=['data/csv_data_1.csv', 'data/csv_data_2.csv'],
                   json_paths=['data/json_data.json'],
