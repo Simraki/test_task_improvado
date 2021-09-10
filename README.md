@@ -1,3 +1,7 @@
+**[Разбор решения](#решение) задачей ниже предоставлен в конце Readme.**
+
+____
+
 Задание для потенциальных кандидатов на позицию Junior-девелоперов.
 Представляет из себя проcтой ETL с разными форматами файлов.
 
@@ -7,6 +11,7 @@
 
 1. [Basic](#basic) - основная задача (обязателльна для выполнения)
 2. [Advanced](#advanced) - дополнение к основной задаче (желательно сделать)
+
 
 Кроме этого есть набор [пунктов для рызмышления дающих бонусы](#бонусы)
 
@@ -145,3 +150,31 @@
 - входные файлы могут быть больших размеров
 - возможность обработки строк с некорректными значениями без прекращения выполнения программы с информированием пользователя об ошибках в конце её выполнения
 - подумать об организации тестирования программы
+
+
+## Решение
+
+Для запуска решения в терминале определены такие аргументы:
+
+- `--csv` - список путей csv файлов 
+- `--json` - список путей json файлов
+- `--xml` - список путей xml файлов
+- `--out` - путь для выходного файла
+- `-adv` или `--advanced` - решить задачу advanced вместо basic
+
+Примеры:
+```
+$ python main.py --csv data/csv_data_1.csv data/csv_data_2.csv --json data/json_data.json --xml data/xml_data.xml
+```
+
+```
+$ python main.py --csv data/csv_data_1.csv data/csv_data_2.csv --json data/json_data.json --xml data/xml_data.xml --out out1/out.tsv
+```
+
+```
+$ python main.py --csv data/csv_data_1.csv data/csv_data_2.csv --json data/json_data.json --xml data/xml_data.xml -adv
+```
+
+```
+$ python main.py --csv data/csv_data_1.csv data/csv_data_2.csv --json data/json_data.json --xml data/xml_data.xml --out out1/out.tsv -adv
+```
